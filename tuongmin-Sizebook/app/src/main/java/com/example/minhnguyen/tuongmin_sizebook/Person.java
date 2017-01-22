@@ -53,8 +53,20 @@ public class Person {
         i += (Waist != null ? Waist + sep : NA + sep);
         i += (Hip != null ? Hip + sep : NA + sep);
         i += (Inseam != null ? Inseam + sep : NA + sep);
-        i += (!Comment.isEmpty() ? Comment + sep : NA);
+        i += (!Comment.isEmpty() ? Comment : NA);
         return i;
+    }
+
+    public void fromString(String info) {
+        Name = info.split(Person.sep)[0];
+        Date = info.split(Person.sep)[1].equalsIgnoreCase(NA)?null:info.split(Person.sep)[1];
+        Neck = info.split(Person.sep)[2].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[2]);
+        Bust = info.split(Person.sep)[3].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[3]);
+        Chest = info.split(Person.sep)[4].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[4]);
+        Waist = info.split(Person.sep)[5].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[5]);
+        Hip = info.split(Person.sep)[6].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[6]);
+        Inseam = info.split(Person.sep)[7].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[7]);
+        Comment = info.split(Person.sep)[8].equalsIgnoreCase(NA)?null:info.split(Person.sep)[2];
     }
 
     public static class PersonEntry implements BaseColumns {

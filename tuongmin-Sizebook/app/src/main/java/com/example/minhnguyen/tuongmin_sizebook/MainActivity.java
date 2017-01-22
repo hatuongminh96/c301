@@ -5,25 +5,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView lv;
+    TextView count;
     Button addNewButton;
     SharedPreferences prefs;
 
@@ -38,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lv = (ListView) findViewById(R.id.aList);
+        count = (TextView) findViewById(R.id.viewCount);
         prefs = getSharedPreferences(PrefFileName, MODE_PRIVATE);
         addNewButton = (Button) findViewById(R.id.addNewButton);
         addNewButton.setOnClickListener(new View.OnClickListener() {
@@ -47,12 +46,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        List<String> buffer = Arrays.asList(prefs.getString("keysInOrder",", ").split(", "));
+        for (String s: buffer) {
+            if (!ID_people.contains(s) && !s.equals("")) ID_people.add(s);
+        }
+        count.setText("Number of entry: " + String.valueOf(ID_people.size()));
+        System.out.println(ID_people.toString());
         Map<String, ?> keys = prefs.getAll();
         System.out.println("this is: "+keys);
-        for (Map.Entry<String, ?> entry : keys.entrySet()) {
-            System.out.println(entry.getKey()+": "+entry.getValue().toString());
-            people.add(entry.getValue().toString().split(Person.sep)[0]);
-            if (!ID_people.contains(entry.getKey())) ID_people.add(entry.getKey());
+        for (String o: ID_people) {
+            System.out.println(o + prefs.getString(o, null));
+            people.add(prefs.getString(o, null).split(Person.sep)[0]);
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, people);
@@ -65,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intentEdit = new Intent(view.getContext(), AddEdit.class);
                     intentEdit.putExtra("id", ID_people.get(position).toString());
                     startActivity(intentEdit);
-
                 }
             });
         }
