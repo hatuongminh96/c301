@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 public class AddEdit extends AppCompatActivity {
 
+    /* Declare variables name */
     Button saveButton;
     Button cancelButton;
     Button deleteButton;
@@ -38,6 +39,7 @@ public class AddEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
 
+        /* Define variables into real object */
         prefs = getSharedPreferences(MainActivity.PrefFileName, MODE_PRIVATE);
         final SharedPreferences.Editor editor = prefs.edit();
 
@@ -45,17 +47,30 @@ public class AddEdit extends AppCompatActivity {
         cancelButton = (Button) findViewById(R.id.cancel_button);
         deleteButton = (Button) findViewById(R.id.delete_button);
 
+        /* Get ID value from MainActivity. ID is the key of the person selected on the ListView.
+        * Default key when selecting "Add New" is null.
+        * */
         Intent rI = getIntent();
         final String id = rI.getStringExtra("id");
         final Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
 
+        /* Call seteDate. This function create a popup windows to select date when the eDate EditText is selected. */
         seteDate();
 
         if (id == null) {
+            /* Add New is selected. Hide Delete button and show Cancel button. */
+
             cancelButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.GONE);
             saveButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+
+                    /* When click save, create a Person object from the information entered into the
+                  * text boxes. Then generate an ID and save the Person object into a SharedPref
+                  * as a String with the key is the ID generated. Add the ID to the ID list and save it into SharedPref with
+                  * the key "keysInOrder". This will assure the entries appear on the ListView in order they were inserted.
+                  * */
+
                     Person person = getInfo();
                     if (person != null) {
                         String i = person.toString();
@@ -72,6 +87,7 @@ public class AddEdit extends AppCompatActivity {
                 }
             });
 
+            // If select cancel then bring back the MainActivity
             cancelButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick (View v) {
                     startActivity(intent);
@@ -80,6 +96,13 @@ public class AddEdit extends AppCompatActivity {
         }
 
         else {
+            /*
+            * An entry in ListView is selected. Hide the back button and show the delete button.
+            * Returning to the previous screen can still be done with the Android back button.
+            * Get info from the string saved in SharedPref and fill the text boxes.
+            * When click save, get information in the text boxes and save it to SharedPref
+            * with the same ID. */
+
             setInfo(id);
             cancelButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.VISIBLE);
@@ -94,6 +117,10 @@ public class AddEdit extends AppCompatActivity {
 
             deleteButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
+                    /* When click delete, remove the entry of that person in SharedPref.
+                    * Also update the ID list and save the updated list with key "keysInOrder".
+                    * */
+
                     editor.remove(id);
                     MainActivity.ID_people.remove(MainActivity.ID_people.indexOf(id));
                     editor.putString("keysInOrder", MainActivity.ID_people.toString().replace("[","").replace("]",""));
@@ -105,6 +132,10 @@ public class AddEdit extends AppCompatActivity {
     }
 
     public Person getInfo() {
+        /*
+        * Get the information entered into text boxes  to create a Person object.
+        * A person object needs a name. Any other variables can be null */
+
         eName = (EditText) findViewById(R.id.name_editText);
         eDate = (EditText) findViewById(R.id.date_editText);
         eNeck = (EditText) findViewById(R.id.neck_editText);
@@ -136,6 +167,12 @@ public class AddEdit extends AppCompatActivity {
     }
 
     public void setInfo(String id) {
+        /* Get the info saved of a person and fill in their text box.
+         * Take in the string which was saved in SharedPreference file and split it
+         * into 9 variables by the separator defined in Person class.
+         * Each one is then used to set the content of the corresponding
+         * text fields in the view. */
+
         String info = prefs.getString(id, null);
 
         eName = (EditText) findViewById(R.id.name_editText);
@@ -171,6 +208,11 @@ public class AddEdit extends AppCompatActivity {
     }
 
     public void seteDate() {
+        /*
+        * Create a Date picker windows that pop up when selecting the date text box
+        * Default to be current date
+        * */
+
         cal = Calendar.getInstance();
         eDate = (EditText) findViewById(R.id.date_editText);
 

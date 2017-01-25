@@ -1,14 +1,11 @@
 package com.example.minhnguyen.tuongmin_sizebook;
 
-import android.provider.BaseColumns;
-
-import java.util.Date;
-
 /**
  * Created by MinhNguyen on 17/1/17.
  */
 
 public class Person {
+    /* Declare stuff */
     String Name;
     String Date;
     Integer Neck;
@@ -22,6 +19,7 @@ public class Person {
     static String sep = ";lkafnlknda;lsdm adasd";
 
     public Person(String q, String w, Integer e, Integer r, Integer t, Integer y, Integer u, Integer i, String o) {
+        /* Initialize a person object */
         Name=q;
         Date=w;
         Neck=e;
@@ -34,6 +32,7 @@ public class Person {
     }
 
     public static int keygen() {
+        /* Return an integer equal the largest in ID list plus 1 */
         int key = 0;
         for (String o: MainActivity.ID_people) {
             if (Integer.valueOf(o) >= key) {
@@ -44,6 +43,11 @@ public class Person {
     }
 
     public String toString(){
+        /* Join the attributes of a Person object to a string.
+        * The attributes are separated by the sep variable.
+        * Attributes that are null is replaced with NA variable.
+        * */
+
         String i;
         i = Name + sep;
         i += (!Date.isEmpty() ? Date + sep : NA + sep);
@@ -58,6 +62,8 @@ public class Person {
     }
 
     public void fromString(String info) {
+        /* */
+
         Name = info.split(Person.sep)[0];
         Date = info.split(Person.sep)[1].equalsIgnoreCase(NA)?null:info.split(Person.sep)[1];
         Neck = info.split(Person.sep)[2].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[2]);
@@ -68,19 +74,4 @@ public class Person {
         Inseam = info.split(Person.sep)[7].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[7]);
         Comment = info.split(Person.sep)[8].equalsIgnoreCase(NA)?null:info.split(Person.sep)[2];
     }
-
-    public static class PersonEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Person";
-        public static final String ID = "id";
-        public static final String NAME = "Name";
-        public static final String DATE = "Date";
-        public static final String NECK = "Neck";
-        public static final String BUST = "Bust";
-        public static final String CHEST = "Chest";
-        public static final String WAIST = "Waist";
-        public static final String HIP = "Hip";
-        public static final String INSEAM = "Inseam";
-        public static final String COMMENT = "Comment";
-    }
-
 }
