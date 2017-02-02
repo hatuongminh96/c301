@@ -6,6 +6,7 @@ package com.example.minhnguyen.tuongmin_sizebook;
 
 public class Person {
     /* Declare stuff */
+    int ID;
     String Name;
     String Date;
     Integer Neck;
@@ -18,17 +19,82 @@ public class Person {
     static String NA = "dknlklsdnclqpowe3rwejlkdc";
     static String sep = ";lkafnlknda;lsdm adasd";
 
-    public Person(String q, String w, Integer e, Integer r, Integer t, Integer y, Integer u, Integer i, String o) {
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public Integer getNeck() {
+        return Neck;
+    }
+
+    public void setNeck(Integer neck) {
+        Neck = neck;
+    }
+
+    public Integer getBust() {
+        return Bust;
+    }
+
+    public void setBust(Integer bust) {
+        Bust = bust;
+    }
+
+    public Integer getChest() {
+        return Chest;
+    }
+
+    public void setChest(Integer chest) {
+        Chest = chest;
+    }
+
+    public Integer getWaist() {
+        return Waist;
+    }
+
+    public void setWaist(Integer waist) {
+        Waist = waist;
+    }
+
+    public Integer getHip() {
+        return Hip;
+    }
+
+    public void setHip(Integer hip) {
+        Hip = hip;
+    }
+
+    public Integer getInseam() {
+        return Inseam;
+    }
+
+    public void setInseam(Integer inseam) {
+        Inseam = inseam;
+    }
+
+    public String getComment() {
+        return Comment;
+    }
+
+    public void setComment(String comment) {
+        Comment = comment;
+    }
+
+    public Person(String name) {
         /* Initialize a person object */
-        Name=q;
-        Date=w;
-        Neck=e;
-        Bust=r;
-        Chest=t;
-        Waist=y;
-        Hip=u;
-        Inseam=i;
-        Comment=o;
+        ID = keygen();
+        Name=name;
     }
 
     public static int keygen() {

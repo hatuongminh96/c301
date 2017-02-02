@@ -12,6 +12,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     Button addNewButton;
 
     public static final String FileName ="data.json";
-
     public static List<Person> people = new ArrayList<>();
+    public static List<String> people_name = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,49 +52,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* Get the ID of people saved in SharedPref. This is a string of integer seperated with ", ".
-        * Its key is "keysInOrder". Once got the string, split it and save to a list.
-        * */
-        List<String> buffer = Arrays.asList(prefs.getString("keysInOrder",", ").split(", "));
-        for (String s: buffer) {
-            if (!ID_people.contains(s) && !s.equals("")) ID_people.add(s);
+        loadFromFile();
+        for (Person p : people) {
+            people_name.add(p.getName());
         }
 
         /* The total number of entries. This is equal the length of the ID list created above */
         count.setText("Number of entry: " + String.valueOf(people.size()));
 
-        /* For each ID in the ID list as key, get the value stored in SharedPref.
-        * Split it with the separator defined in Person class. Get the first element (the name)
-        * and save it to a list.
-        * */
-        for (String o: ID_people) {
-            System.out.println(o + prefs.getString(o, null));
-            people.add(prefs.getString(o, null).split(Person.sep)[0]);
-        }
-
         /* Create an array adapter with the name list*/
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, people);
-
-        try {
-            /* Populate the ListView with the name list */
-            lv.setAdapter(arrayAdapter);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, people_name);
+        lv.setAdapter(arrayAdapter);
 
             /* When click on an entry in the list view, open the AddEdit activity and send the ID
             * of that person to the AddEdit activity. The ID is the element at the index [position]
             * in the ID list. */
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intentEdit = new Intent(view.getContext(), AddEdit.class);
-                    intentEdit.putExtra("id", ID_people.get(position));
-                    startActivity(intentEdit);
-                }
-            });
-        }
-        catch (NullPointerException e) {
-            /*justincase*/
-            Intent intent = new Intent(this.getApplicationContext(), AddEdit.class);
-            startActivity(intent);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentEdit = new Intent(view.getContext(), AddEdit.class);
+                intentEdit.putExtra("id", position);
+                startActivity(intentEdit);
+            }
+        });
+    }
+
+    private void loadFromFile() {
+        try {
+            FileInputStream fis = openFileInput(FileName);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            people=gson.fromJson(in, new TypeToken<ArrayList<Person>>(){}.getType());
+            fis.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            people=new ArrayList<Person>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
         }
     }
 }

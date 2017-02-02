@@ -108,7 +108,9 @@ public class AddEdit extends AppCompatActivity {
             deleteButton.setVisibility(View.VISIBLE);
             saveButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v) {
-
+                    Person person = MainActivity.people.get(Integer.valueOf(id));
+                    MainActivity.people.add(person);
+                    saveInFile();
                     startActivity(intent);
                 }
             });
@@ -152,7 +154,16 @@ public class AddEdit extends AppCompatActivity {
         String comment = eComment.getText().toString();
 
         if (!name.isEmpty()) {
-            return new Person(name, date, neck, bust, chest, waist, hip, inseam, comment);
+            Person p = new Person(name);
+            p.setBust(bust);
+            p.setChest(chest);
+            p.setComment(comment);
+            p.setDate(date);
+            p.setHip(hip);
+            p.setInseam(inseam);
+            p.setNeck(neck);
+            p.setWaist(waist);
+            return p;
         }
 
         else {
