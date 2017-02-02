@@ -22,12 +22,10 @@ public class MainActivity extends AppCompatActivity {
     ListView lv;
     TextView count;
     Button addNewButton;
-    SharedPreferences prefs;
 
-    public static final String PrefFileName ="PrefFile";
+    public static final String FileName ="data.json";
 
-    public List<String> people = new ArrayList<>();
-    public static List<String> ID_people = new ArrayList<>();
+    public static List<Person> people = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         /* Instantiate variables with objects of its kind */
         lv = (ListView) findViewById(R.id.aList);
         count = (TextView) findViewById(R.id.viewCount);
-        prefs = getSharedPreferences(PrefFileName, MODE_PRIVATE);
         addNewButton = (Button) findViewById(R.id.addNewButton);
         addNewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /* The total number of entries. This is equal the length of the ID list created above */
-        count.setText("Number of entry: " + String.valueOf(ID_people.size()));
+        count.setText("Number of entry: " + String.valueOf(people.size()));
 
         /* For each ID in the ID list as key, get the value stored in SharedPref.
         * Split it with the separator defined in Person class. Get the first element (the name)
