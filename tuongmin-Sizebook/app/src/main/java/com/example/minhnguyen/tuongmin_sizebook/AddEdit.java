@@ -121,8 +121,7 @@ public class AddEdit extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v) {
                     Person updatePerson = getInfo();
-                    MainActivity.people.remove(MainActivity.people.indexOf(person));
-                    MainActivity.people.add(updatePerson);
+                    MainActivity.people.set(Integer.valueOf(id), updatePerson);
                     saveInFile();
                     startActivity(intent);
                 }

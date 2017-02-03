@@ -1,8 +1,6 @@
 package com.example.minhnguyen.tuongmin_sizebook;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             fis.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            people=new ArrayList<Person>();
+            people = new ArrayList<Person>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException();
