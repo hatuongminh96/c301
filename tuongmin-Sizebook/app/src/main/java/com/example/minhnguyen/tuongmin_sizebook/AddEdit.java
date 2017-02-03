@@ -50,6 +50,16 @@ public class AddEdit extends AppCompatActivity {
 
         /* Define variables into real object */
 
+        eName = (EditText) findViewById(R.id.name_editText);
+        eDate = (EditText) findViewById(R.id.date_editText);
+        eNeck = (EditText) findViewById(R.id.neck_editText);
+        eBust = (EditText) findViewById(R.id.bust_editText);
+        eChest = (EditText) findViewById(R.id.chest_editText);
+        eWaist = (EditText) findViewById(R.id.waist_editText);
+        eHip = (EditText) findViewById(R.id.hip_editText);
+        eInseam = (EditText) findViewById(R.id.inseam_editText);
+        eComment = (EditText) findViewById(R.id.comment_editText);
+
         saveButton = (Button) findViewById(R.id.button_save);
         cancelButton = (Button) findViewById(R.id.cancel_button);
         deleteButton = (Button) findViewById(R.id.delete_button);
@@ -63,7 +73,7 @@ public class AddEdit extends AppCompatActivity {
 
         /* Call seteDate. This function create a popup windows to select date when the eDate EditText is selected. */
         seteDate();
-
+        System.out.println(id);
         if (id == null) {
             /* Add New is selected. Hide Delete button and show Cancel button. */
 
@@ -102,14 +112,17 @@ public class AddEdit extends AppCompatActivity {
             * Get info from the string saved in SharedPref and fill the text boxes.
             * When click save, get information in the text boxes and save it to SharedPref
             * with the same ID. */
-
+            final Person person = MainActivity.people.get(Integer.valueOf(id));
+            System.out.println(person.getName());
+            setInfo(person);
 
             cancelButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.VISIBLE);
             saveButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v) {
-                    Person person = MainActivity.people.get(Integer.valueOf(id));
-                    MainActivity.people.add(person);
+                    Person updatePerson = getInfo();
+                    MainActivity.people.remove(MainActivity.people.indexOf(person));
+                    MainActivity.people.add(updatePerson);
                     saveInFile();
                     startActivity(intent);
                 }
@@ -121,7 +134,8 @@ public class AddEdit extends AppCompatActivity {
                     * Also update the ID list and save the updated list with key "keysInOrder".
                     * */
 
-
+                    MainActivity.people.remove(MainActivity.people.indexOf(person));
+                    saveInFile();
                     startActivity(intent);
                 }
             });
@@ -132,16 +146,6 @@ public class AddEdit extends AppCompatActivity {
         /*
         * Get the information entered into text boxes  to create a Person object.
         * A person object needs a name. Any other variables can be null */
-
-        eName = (EditText) findViewById(R.id.name_editText);
-        eDate = (EditText) findViewById(R.id.date_editText);
-        eNeck = (EditText) findViewById(R.id.neck_editText);
-        eBust = (EditText) findViewById(R.id.bust_editText);
-        eChest = (EditText) findViewById(R.id.chest_editText);
-        eWaist = (EditText) findViewById(R.id.waist_editText);
-        eHip = (EditText) findViewById(R.id.hip_editText);
-        eInseam = (EditText) findViewById(R.id.inseam_editText);
-        eComment = (EditText) findViewById(R.id.comment_editText);
 
         String name = eName.getText().toString();
         String date = eDate.getText().toString();
@@ -170,6 +174,26 @@ public class AddEdit extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "A man needs a name!", Toast.LENGTH_LONG).show();
             return null;
         }
+    }
+
+    private void setInfo(Person p){
+
+        String neck = p.getNeck() == null ? "" : p.getNeck().toString();
+        String bust = p.getBust() == null ? "" : p.getBust().toString();
+        String chest = p.getChest() == null ? "" : p.getChest().toString();
+        String waist = p.getWaist() == null ? "" : p.getWaist().toString();
+        String hip = p.getHip() == null ? "" : p.getHip().toString();
+        String inseam = p.getInseam() == null ? "" : p.getInseam().toString();
+
+        eName.setText(p.getName());
+        eDate.setText(p.getDate());
+        eNeck.setText(neck);
+        eBust.setText(bust);
+        eChest.setText(chest);
+        eWaist.setText(waist);
+        eHip.setText(hip);
+        eInseam.setText(inseam);
+        eComment.setText(p.getComment());
     }
 
     public void seteDate() {

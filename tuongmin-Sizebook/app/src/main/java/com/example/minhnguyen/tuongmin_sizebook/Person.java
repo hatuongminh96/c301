@@ -6,7 +6,6 @@ package com.example.minhnguyen.tuongmin_sizebook;
 
 public class Person {
     /* Declare stuff */
-    int ID;
     String Name;
     String Date;
     Integer Neck;
@@ -93,19 +92,7 @@ public class Person {
 
     public Person(String name) {
         /* Initialize a person object */
-        ID = keygen();
         Name=name;
-    }
-
-    public static int keygen() {
-        /* Return an integer equal the largest in ID list plus 1 */
-        int key = 0;
-        for (String o: MainActivity.ID_people) {
-            if (Integer.valueOf(o) >= key) {
-                key = Integer.valueOf(o)+1;
-            }
-        }
-        return key;
     }
 
     public String toString(){

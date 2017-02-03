@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String FileName ="data.json";
     public static List<Person> people = new ArrayList<>();
-    public static List<String> people_name = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         loadFromFile();
+        List<String> people_name = new ArrayList<>();
         for (Person p : people) {
             people_name.add(p.getName());
         }
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intentEdit = new Intent(view.getContext(), AddEdit.class);
-                intentEdit.putExtra("id", position);
+                intentEdit.putExtra("id", String.valueOf(position));
                 startActivity(intentEdit);
             }
         });
