@@ -31,7 +31,6 @@ public class AddEdit extends AppCompatActivity {
     Button saveButton;
     Button cancelButton;
     Button deleteButton;
-    SharedPreferences prefs;
     EditText eName;
     EditText eDate;
     EditText eNeck;
@@ -129,10 +128,6 @@ public class AddEdit extends AppCompatActivity {
 
             deleteButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
-                    /* When click delete, remove the entry of that person in SharedPref.
-                    * Also update the ID list and save the updated list with key "keysInOrder".
-                    * */
-
                     MainActivity.people.remove(MainActivity.people.indexOf(person));
                     saveInFile();
                     startActivity(intent);
@@ -202,7 +197,6 @@ public class AddEdit extends AppCompatActivity {
         * */
 
         cal = Calendar.getInstance();
-        eDate = (EditText) findViewById(R.id.date_editText);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
