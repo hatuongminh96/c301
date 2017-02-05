@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. Tuong Minh Nguyen Tran. University of Alberta. All rights reserved.
+ */
+
 package com.example.minhnguyen.tuongmin_sizebook;
 
 /**
@@ -15,8 +19,17 @@ public class Person {
     Integer Hip;
     Integer Inseam;
     String Comment;
-    static String NA = "dknlklsdnclqpowe3rwejlkdc";
-    static String sep = ";lkafnlknda;lsdm adasd";
+
+    /** Initialize a person object
+     * A Person object always needs a name
+     * */
+    public Person(String name) {
+        Name=name;
+    }
+
+    /**
+     * Auto-generated getters and setters
+     */
 
     public String getName() {
         return Name;
@@ -88,43 +101,5 @@ public class Person {
 
     public void setComment(String comment) {
         Comment = comment;
-    }
-
-    public Person(String name) {
-        /* Initialize a person object */
-        Name=name;
-    }
-
-    public String toString(){
-        /* Join the attributes of a Person object to a string.
-        * The attributes are separated by the sep variable.
-        * Attributes that are null is replaced with NA variable.
-        * */
-
-        String i;
-        i = Name + sep;
-        i += (!Date.isEmpty() ? Date + sep : NA + sep);
-        i += (Neck != null ? Neck + sep : NA + sep);
-        i += (Bust != null ? Bust + sep : NA + sep);
-        i += (Chest != null ? Chest + sep : NA + sep);
-        i += (Waist != null ? Waist + sep : NA + sep);
-        i += (Hip != null ? Hip + sep : NA + sep);
-        i += (Inseam != null ? Inseam + sep : NA + sep);
-        i += (!Comment.isEmpty() ? Comment : NA);
-        return i;
-    }
-
-    public void fromString(String info) {
-        /* */
-
-        Name = info.split(Person.sep)[0];
-        Date = info.split(Person.sep)[1].equalsIgnoreCase(NA)?null:info.split(Person.sep)[1];
-        Neck = info.split(Person.sep)[2].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[2]);
-        Bust = info.split(Person.sep)[3].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[3]);
-        Chest = info.split(Person.sep)[4].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[4]);
-        Waist = info.split(Person.sep)[5].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[5]);
-        Hip = info.split(Person.sep)[6].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[6]);
-        Inseam = info.split(Person.sep)[7].equalsIgnoreCase(NA)?null:Integer.valueOf(info.split(Person.sep)[7]);
-        Comment = info.split(Person.sep)[8].equalsIgnoreCase(NA)?null:info.split(Person.sep)[2];
     }
 }

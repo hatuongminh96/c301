@@ -1,9 +1,12 @@
+/*
+ * Copyright (c) 2017. Tuong Minh Nguyen Tran. University of Alberta. All rights reserved.
+ */
+
 package com.example.minhnguyen.tuongmin_sizebook;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -14,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,9 +27,15 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+/**
+ * This is the Add/Edit activity. When Adding a new person, this activity is shown with empty
+ * text boxes. When selecting a person to edit, this activity is shown with that person
+ * information in the text boxes, ready to modify, or keep still.
+ */
+
 public class AddEdit extends AppCompatActivity {
 
-    /* Declare variables name */
+    /**  Declare variables name */
     Button saveButton;
     Button cancelButton;
     Button deleteButton;
@@ -47,8 +55,7 @@ public class AddEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
 
-        /* Define variables into real object */
-
+        /** Define variables into real object */
         eName = (EditText) findViewById(R.id.name_editText);
         eDate = (EditText) findViewById(R.id.date_editText);
         eNeck = (EditText) findViewById(R.id.neck_editText);
@@ -63,29 +70,34 @@ public class AddEdit extends AppCompatActivity {
         cancelButton = (Button) findViewById(R.id.cancel_button);
         deleteButton = (Button) findViewById(R.id.delete_button);
 
-        /* Get ID value from MainActivity. ID is the key of the person selected on the ListView.
-        * Default key when selecting "Add New" is null.
-        * */
+        /** Get the position of the entry in ListView user selected. It is also the index in people
+         * ArrayList in MainActivity
+        */
         Intent rI = getIntent();
         final String id = rI.getStringExtra("id");
         final Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
 
-        /* Call seteDate. This function create a popup windows to select date when the eDate EditText is selected. */
+        /**
+         * Call seteDate. This function create a popup windows to select date when
+         * the eDate EditText is selected.
+         * */
         seteDate();
         System.out.println(id);
+
+        /**
+         * Add New is selected. Hide Delete button and show Cancel button.
+         * When click on Save button, getInfo is called to get the information entered
+         * in the text boxes and create a Person object. It will return null if
+         * there is no Person Name entered.
+         * When receive the Person object, add to the people list in MainActivity and
+         * update save fiile.
+         */
         if (id == null) {
-            /* Add New is selected. Hide Delete button and show Cancel button. */
 
             cancelButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.GONE);
             saveButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
-                    /* When click save, create a Person object from the information entered into the
-                  * text boxes. Then generate an ID and save the Person object into a SharedPref
-                  * as a String with the key is the ID generated. Add the ID to the ID list and save it into SharedPref with
-                  * the key "keysInOrder". This will assure the entries appear on the ListView in order they were inserted.
-                  * */
 
                     Person person = getInfo();
                     if (person != null) {
@@ -96,7 +108,6 @@ public class AddEdit extends AppCompatActivity {
                 }
             });
 
-            // If select cancel then bring back the MainActivity
             cancelButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick (View v) {
                     startActivity(intent);
@@ -104,13 +115,14 @@ public class AddEdit extends AppCompatActivity {
             });
         }
 
+        /**
+        * An entry in ListView is selected. Get the person object as the position of the entry
+         * in ListView is the index in the people ArrayList. Call SetInfo on that Person object.
+         * Hide cancel button and show delete button. Save and Edit are done by updating the
+         * people ArrayList in MainActivity and call saveInFile()
+        * */
         else {
-            /*
-            * An entry in ListView is selected. Hide the back button and show the delete button.
-            * Returning to the previous screen can still be done with the Android back button.
-            * Get info from the string saved in SharedPref and fill the text boxes.
-            * When click save, get information in the text boxes and save it to SharedPref
-            * with the same ID. */
+
             final Person person = MainActivity.people.get(Integer.valueOf(id));
             System.out.println(person.getName());
             setInfo(person);
@@ -136,10 +148,11 @@ public class AddEdit extends AppCompatActivity {
         }
     }
 
+    /**
+     * Get the information entered into text boxes  to create a Person object.
+     * A person object needs a name. Any other variables can be null
+     * */
     public Person getInfo() {
-        /*
-        * Get the information entered into text boxes  to create a Person object.
-        * A person object needs a name. Any other variables can be null */
 
         String name = eName.getText().toString();
         String date = eDate.getText().toString();
@@ -164,12 +177,20 @@ public class AddEdit extends AppCompatActivity {
             return p;
         }
 
+        /**
+         * Notify when a person name is not entered, return null in order to not save a null
+         * object to save file
+         */
         else {
+
             Toast.makeText(getApplicationContext(), "A man needs a name!", Toast.LENGTH_LONG).show();
             return null;
         }
     }
 
+    /**
+     * Get a person object as input and set text boxes to their information accordingly
+     */
     private void setInfo(Person p){
 
         String neck = p.getNeck() == null ? "" : p.getNeck().toString();
@@ -190,11 +211,11 @@ public class AddEdit extends AppCompatActivity {
         eComment.setText(p.getComment());
     }
 
+    /**
+     * Create a Date picker windows that pop up when selecting the date text box
+     * Default to be current date
+     * */
     public void seteDate() {
-        /*
-        * Create a Date picker windows that pop up when selecting the date text box
-        * Default to be current date
-        * */
 
         cal = Calendar.getInstance();
 
@@ -218,6 +239,9 @@ public class AddEdit extends AppCompatActivity {
         });
     }
 
+    /**
+     * Open save file, convert the people ArrayList in MainActivity to GSon and save it to the file
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(MainActivity.FileName, Context.MODE_PRIVATE);

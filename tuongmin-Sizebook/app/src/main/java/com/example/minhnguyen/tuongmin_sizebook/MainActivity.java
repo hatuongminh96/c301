@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. Tuong Minh Nguyen Tran. University of Alberta. All rights reserved.
+ */
+
 package com.example.minhnguyen.tuongmin_sizebook;
 
 import android.content.Intent;
@@ -21,6 +25,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main screen of the application. This is where the ListView will display the name of people
+ * saved in the program.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     /* Declare variables name */
@@ -42,28 +51,36 @@ public class MainActivity extends AppCompatActivity {
         addNewButton = (Button) findViewById(R.id.addNewButton);
         addNewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 /* When click Add New, open AddEdit activity */
+
                 Intent intent = new Intent(v.getContext(), AddEdit.class);
                 startActivity(intent);
             }
         });
 
+        /**
+         * Call loadFromFile() to load Person objects saved in save file to people ArrayList
+         * For each people in the people list get their name and save to the name list, which
+         * will be used to show on ListView
+         */
         loadFromFile();
         List<String> people_name = new ArrayList<>();
         for (Person p : people) {
             people_name.add(p.getName());
         }
 
-        /* The total number of entries. This is equal the length of the ID list created above */
+        /** The total number of entries. This is equal the length of the people ArrayList */
         count.setText("Number of entry: " + String.valueOf(people.size()));
 
         /* Create an array adapter with the name list*/
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, people_name);
         lv.setAdapter(arrayAdapter);
 
-            /* When click on an entry in the list view, open the AddEdit activity and send the ID
-            * of that person to the AddEdit activity. The ID is the element at the index [position]
-            * in the ID list. */
+        /** When click on an entry in the list view, open the AddEdit activity and send the
+         * position of that entry to the AddEdit activity. The position is also the
+         * index of that Person in the people list
+         */
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Open the save file and load all saved object to people list
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FileName);

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. Tuong Minh Nguyen Tran. University of Alberta. All rights reserved.
+ */
+
 package com.example.minhnguyen.tuongmin_sizebook;
 
 import org.junit.Test;

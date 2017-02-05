@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. Tuong Minh Nguyen Tran. University of Alberta. All rights reserved.
+ */
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
