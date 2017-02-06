@@ -65,6 +65,14 @@ package com.example.minhnguyen.tuongmin_sizebook;
 
      void setComment(String comment) { Comment = comment; }
 
+    /**
+     * Round a Float to its nearest 0.5 or 1.0, for example:
+     * 10.33 -> 10.5
+     * 10.7 -> 10.5
+     * 11.2 -> 11.0
+     * @param value
+     * @return Float
+     */
     private Float round(Float value){
         if (value == null || value % 0.5F == 0) return value;
         else if (Math.abs(Math.round(value) - value) <= 0.25F) return Float.valueOf(Math.round(value));
