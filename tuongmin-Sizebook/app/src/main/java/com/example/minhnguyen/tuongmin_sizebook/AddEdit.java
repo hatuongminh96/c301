@@ -152,16 +152,16 @@ public class AddEdit extends AppCompatActivity {
      * Get the information entered into text boxes  to create a Person object.
      * A person object needs a name. Any other variables can be null
      * */
-    public Person getInfo() {
+    private Person getInfo() {
 
         String name = eName.getText().toString();
         String date = eDate.getText().toString();
-        Integer neck = eNeck.getText().toString().isEmpty()? null :Integer.valueOf(eNeck.getText().toString());
-        Integer bust = eBust.getText().toString().isEmpty()? null :Integer.valueOf(eBust.getText().toString());
-        Integer chest = eChest.getText().toString().isEmpty()? null :Integer.valueOf(eChest.getText().toString());
-        Integer waist = eWaist.getText().toString().isEmpty()? null :Integer.valueOf(eWaist.getText().toString());
-        Integer hip = eHip.getText().toString().isEmpty()? null :Integer.valueOf(eHip.getText().toString());
-        Integer inseam = eInseam.getText().toString().isEmpty()? null :Integer.valueOf(eInseam.getText().toString());
+        Float neck = eNeck.getText().toString().isEmpty()? null :Float.valueOf(eNeck.getText().toString());
+        Float bust = eBust.getText().toString().isEmpty()? null :Float.valueOf(eBust.getText().toString());
+        Float chest = eChest.getText().toString().isEmpty()? null :Float.valueOf(eChest.getText().toString());
+        Float waist = eWaist.getText().toString().isEmpty()? null :Float.valueOf(eWaist.getText().toString());
+        Float hip = eHip.getText().toString().isEmpty()? null :Float.valueOf(eHip.getText().toString());
+        Float inseam = eInseam.getText().toString().isEmpty()? null :Float.valueOf(eInseam.getText().toString());
         String comment = eComment.getText().toString();
 
         if (!name.isEmpty()) {
@@ -215,7 +215,7 @@ public class AddEdit extends AppCompatActivity {
      * Create a Date picker windows that pop up when selecting the date text box
      * Default to be current date
      * */
-    public void seteDate() {
+    private void seteDate() {
 
         cal = Calendar.getInstance();
 

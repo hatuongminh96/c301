@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     TextView count;
     Button addNewButton;
 
-    public static final String FileName ="data.json";
-    public static List<Person> people = new ArrayList<>();
+    static final String FileName ="data.json";
+    static List<Person> people = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

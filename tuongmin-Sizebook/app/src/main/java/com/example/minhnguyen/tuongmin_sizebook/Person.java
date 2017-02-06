@@ -8,98 +8,67 @@ package com.example.minhnguyen.tuongmin_sizebook;
  * Created by MinhNguyen on 17/1/17.
  */
 
-public class Person {
+ public class Person {
     /* Declare stuff */
-    String Name;
-    String Date;
-    Integer Neck;
-    Integer Bust;
-    Integer Chest;
-    Integer Waist;
-    Integer Hip;
-    Integer Inseam;
-    String Comment;
+    private String Name;
+    private String Date;
+    private Float Neck;
+    private Float Bust;
+    private Float Chest;
+    private Float Waist;
+    private Float Hip;
+    private Float Inseam;
+    private String Comment;
 
     /** Initialize a person object
      * A Person object always needs a name
      * */
-    public Person(String name) {
-        Name=name;
+     public Person(String name) {
+        Name = name;
     }
 
     /**
      * Auto-generated getters and setters
      */
 
-    public String getName() {
-        return Name;
-    }
+     String getName() { return Name; }
 
-    public void setName(String name) {
-        Name = name;
-    }
+     String getDate() { return Date; }
 
-    public String getDate() {
-        return Date;
-    }
+     void setDate(String date) { Date = date; }
 
-    public void setDate(String date) {
-        Date = date;
-    }
+     Float getNeck() { return Neck; }
 
-    public Integer getNeck() {
-        return Neck;
-    }
+     void setNeck(Float neck) { Neck = round(neck); }
 
-    public void setNeck(Integer neck) {
-        Neck = neck;
-    }
+     Float getBust() { return Bust; }
 
-    public Integer getBust() {
-        return Bust;
-    }
+     void setBust(Float bust) { Bust = round(bust); }
 
-    public void setBust(Integer bust) {
-        Bust = bust;
-    }
+     Float getChest() { return Chest; }
 
-    public Integer getChest() {
-        return Chest;
-    }
+     void setChest(Float chest) { Chest = round(chest); }
 
-    public void setChest(Integer chest) {
-        Chest = chest;
-    }
+     Float getWaist() { return Waist; }
 
-    public Integer getWaist() {
-        return Waist;
-    }
+     void setWaist(Float waist) { Waist = round(waist); }
 
-    public void setWaist(Integer waist) {
-        Waist = waist;
-    }
+     Float getHip() { return Hip; }
 
-    public Integer getHip() {
-        return Hip;
-    }
+     void setHip(Float hip) { Hip = round(hip); }
 
-    public void setHip(Integer hip) {
-        Hip = hip;
-    }
+     Float getInseam() { return Inseam; }
 
-    public Integer getInseam() {
-        return Inseam;
-    }
+     void setInseam(Float inseam) { Inseam = round(inseam); }
 
-    public void setInseam(Integer inseam) {
-        Inseam = inseam;
-    }
+     String getComment() { return Comment; }
 
-    public String getComment() {
-        return Comment;
-    }
+     void setComment(String comment) { Comment = comment; }
 
-    public void setComment(String comment) {
-        Comment = comment;
+    private Float round(Float value){
+        if (value == null || value % 0.5F == 0) return value;
+        else if (Math.abs(Math.round(value) - value) <= 0.25F) return Float.valueOf(Math.round(value));
+        else if (Math.round(value) > value) return Math.round(value) - 0.5F;
+        else return Math.round(value) + 0.5F;
     }
 }
