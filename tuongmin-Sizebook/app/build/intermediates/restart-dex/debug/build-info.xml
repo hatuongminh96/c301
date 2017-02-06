@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="25"
+    density="420dpi"
+    format="8"
+    plugin-version="2.2.3"
+    timestamp="13899025470329"
+    token="-3431203607508921411"
+    verifier="FULL_BUILD_REQUESTED" >
+
+    <task
+        name="javac"
+        duration="202" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="145" />
+    <task
+        name="verifier"
+        duration="19" />
+
+    <artifact
+        location="/Users/MinhNguyen/Google Drive/CMPUT301/tuongmin-Sizebook/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
+
+    <build
+        timestamp="13899025470329"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="/Users/MinhNguyen/Google Drive/CMPUT301/tuongmin-Sizebook/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>
